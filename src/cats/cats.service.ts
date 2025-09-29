@@ -38,8 +38,28 @@ export class CatsService {
   }
 
   async update(id: number, updateCatDto: UpdateCatDto) {
-    // return await this.catRepository.update(id, updateCatDto);
-    return;
+    const cat = await this.catRepository.findOneBy({ id });
+
+    if (!cat) {
+      throw new BadRequestException('Cat not found');
+    }
+
+    let breed;
+    if (updateCatDto.breed) {
+      breed = await this.breedRepository.findOneBy({
+        name: updateCatDto.breed,
+      });
+
+      if (!breed) {
+        throw new BadRequestException('Breed not found');
+      }
+    }
+
+    return await this.catRepository.save({
+      ...cat,
+      ...updateCatDto,
+      breed,
+    });
   }
 
   async remove(id: number) {
