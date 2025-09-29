@@ -1,4 +1,5 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { Cat } from 'src/cats/entities/cat.entity';
 
 @Entity()
 export class Breed {
@@ -7,4 +8,7 @@ export class Breed {
 
   @Column()
   name: string;
+
+  @OneToMany(() => Cat, (cat) => cat.breed)
+  cats: Cat[];
 }

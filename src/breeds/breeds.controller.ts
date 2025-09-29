@@ -29,6 +29,7 @@ export class BreedsController {
   findOne(@Param('id') id: number) {
     return this.breedsService.findOne(id);
   }
+
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateBreedDto: UpdateBreedDto) {
     return this.breedsService.update(id, updateBreedDto);
