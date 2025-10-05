@@ -4,13 +4,17 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { RegisterDto } from './dto/resgister.dto';
 import * as bcryptjs from 'bcryptjs';
+import { JwtService } from '@nestjs/jwt';
+import { RegisterDto } from './dto/resgister.dto';
 import { loginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async register({ name, email, password }: RegisterDto) {
     const user = await this.usersService.findOneByEmail(email);
