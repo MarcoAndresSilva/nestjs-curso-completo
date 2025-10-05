@@ -28,6 +28,8 @@ export class AuthService {
     });
   }
 
+  // autenticacion: es cunado las credenciales y al apassword sean correctas y le devolvemos el token
+  // y la autorización : es cuando queramos visitar una ruta que sea con autenticacion(privilegios) es usuario que tine el token es el que va a poder acceder
   async login({ email, password }: loginDto) {
     const user = await this.usersService.findOneByEmail(email);
     if (!user) {
@@ -39,6 +41,12 @@ export class AuthService {
       throw new UnauthorizedException('Password is wrong');
     }
 
-    return user;
+    const payload = { sub: user.id, email: user.email }; // en el payload le decimos que datos van a viajar en el token
+    const token = await this.jwtService.signAsync(payload);
+
+    return {
+      user,
+      token,
+    };
   }
 }
