@@ -21,11 +21,16 @@ export class AuthService {
     if (user) {
       throw new BadRequestException('User already exists');
     }
-    return await this.usersService.create({
+    await this.usersService.create({
       name,
       email,
       password: await bcryptjs.hash(password, 10),
     });
+
+    return {
+      name,
+      email,
+    };
   }
 
   // autenticacion: es cunado las credenciales y al apassword sean correctas y le devolvemos el token
@@ -48,5 +53,12 @@ export class AuthService {
       user,
       token,
     };
+  }
+
+  async profile({ email, role }: { email: string; role: string }) {
+    // if (role !== 'admin') { esta bien pero es peresoso si tengo mil endpoints qeu encesiten rtol de admin apra entrar entonces hjay que manejarlo de otra manera como el auth guard
+    //   throw new UnauthorizedException('You are not an admin');
+    // }
+    return await this.usersService.findOneByEmail(email);
   }
 }
