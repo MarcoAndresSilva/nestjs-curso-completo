@@ -32,7 +32,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  @Roles('admin')
+  @Roles('user')
   @UseGuards(AuthGuard, RolesGuard)
   profile(@Req() req: RequestWithUser) {
     return this.authService.profile(req.user);
