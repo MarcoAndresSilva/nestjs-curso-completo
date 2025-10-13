@@ -7,6 +7,7 @@ import { Request } from 'express';
 import { Roles } from './decorators/roles.decorators';
 import { RolesGuard } from './guard/roles.guard';
 import { Role } from './enums/rol.enums';
+import { Auth } from './decorators/auth.decorators';
 
 interface RequestWithUser extends Request {
   user: { email: string; role: string };
@@ -33,9 +34,17 @@ export class AuthController {
   }
 
   @Get('profile')
-  @Roles(Role.USER)
+  @Auth(Role.ADMIN)
   @UseGuards(AuthGuard, RolesGuard)
   profile(@Req() req: RequestWithUser) {
     return this.authService.profile(req.user);
   }
+
+  // sin decorador sin applyDecorators
+  //@Get('profile')
+  // @Roles(Role.USER)
+  // @UseGuards(AuthGuard, RolesGuard)
+  // profile(@Req() req: RequestWithUser) {
+  //   return this.authService.profile(req.user);
+  // }
 }

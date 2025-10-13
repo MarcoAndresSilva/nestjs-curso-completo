@@ -19,7 +19,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: 'user' })
+  @Column({ default: 'admin' })
   role: string;
 
   @DeleteDateColumn()
