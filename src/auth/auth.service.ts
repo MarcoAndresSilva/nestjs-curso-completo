@@ -62,3 +62,4 @@ export class AuthService {
     return await this.usersService.findOneByEmail(email);
   }
 }
+// TODO roels segunda parte actualizar todo para que compile
