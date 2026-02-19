@@ -36,7 +36,7 @@ export class AuthService {
   // autenticacion: es cuando las credenciales y el password sean correctos le devolvemos el token
   // y la autorización : es cuando queramos visitar una ruta que sea con autenticacion(privilegios) es usuario que tine el token es el que va a poder acceder
   async login({ email, password }: loginDto) {
-    const user = await this.usersService.findOneByEmail(email);
+    const user = await this.usersService.findOneByEmailWithPassword(email);
     if (!user) {
       throw new UnauthorizedException('Email is wrong');
     }
