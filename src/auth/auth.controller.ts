@@ -6,7 +6,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { Request } from 'express';
 import { Roles } from './decorators/roles.decorators';
 import { RolesGuard } from './guard/roles.guard';
-import { Role } from './enums/rol.enums';
+import { Role } from '../common/enums/rol.enums';
 import { Auth } from './decorators/auth.decorators';
 
 interface RequestWithUser extends Request {
