@@ -1,11 +1,15 @@
+import { IsEmail } from 'class-validator';
 import {
   Column,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToMany,
   ManyToOne,
   //   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Breed } from 'src/breeds/entities/breed.entity';
+import { User } from 'src/users/entities/user.entity';
 @Entity()
 export class Cat {
   //   @PrimaryGeneratedColumn()
@@ -25,4 +29,11 @@ export class Cat {
     eager: true, // el eager para que traiga la raza al hacer un findOne
   })
   breed: Breed;
+
+  @ManyToMany(() => User)
+  @JoinColumn({ name: 'userEmail', referencedColumnName: 'email' })
+  users: User;
+
+  @Column()
+  userEmail: string;
 }

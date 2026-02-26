@@ -4,7 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { Cat } from './entities/cat.entity';
-import { Breed } from 'src/breeds/entities/breed.entity';
+import { Breed } from '../breeds/entities/breed.entity';
+import { UserActiveInterface } from '../common/interfaces/user-activate.interface';
 
 @Injectable()
 export class CatsService {
@@ -15,7 +16,7 @@ export class CatsService {
     private breedRepository: Repository<Breed>,
   ) {}
 
-  async create(createCatDto: CreateCatDto) {
+  async create(createCatDto: CreateCatDto, user: UserActiveInterface) {
     const breed = await this.breedRepository.findOneBy({
       name: createCatDto.breed,
     });
@@ -26,6 +27,7 @@ export class CatsService {
     return await this.catRepository.save({
       ...createCatDto,
       breed,
+      userEmail: user.email,
     });
   }
 
