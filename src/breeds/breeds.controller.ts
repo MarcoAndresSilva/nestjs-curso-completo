@@ -10,7 +10,10 @@ import {
 import { BreedsService } from './breeds.service';
 import { CreateBreedDto } from './dto/create-breed.dto';
 import { UpdateBreedDto } from './dto/update-breed.dto';
+import { Auth } from 'src/auth/decorators/auth.decorators';
+import { Role } from 'src/common/enums/rol.enums';
 
+@Auth(Role.ADMIN) // con esto todo lo que sea Breeds va a necesitar el rol de ADMIN
 @Controller('breeds')
 export class BreedsController {
   constructor(private readonly breedsService: BreedsService) {}
