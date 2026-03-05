@@ -31,8 +31,14 @@ export class CatsService {
     });
   }
 
-  async findAll() {
-    return await this.catRepository.find();
+  async findAll(user: UserActiveInterface) {
+    console.log(user);
+    if (user.role === 'admin') {
+      return await this.catRepository.find();
+    }
+    return await this.catRepository.find({
+      where: { userEmail: user.email },
+    });
   }
 
   async findOne(id: number) {
