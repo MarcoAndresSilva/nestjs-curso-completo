@@ -38,7 +38,7 @@ export class CatsController {
     @Param('id') id: number,
     @ActiveUser() user: userActivateInterface.UserActiveInterface,
   ) {
-    return this.catsService.findOne(+id);
+    return this.catsService.findOne(+id, user);
   }
 
   @Patch(':id')
