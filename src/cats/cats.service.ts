@@ -50,34 +50,23 @@ export class CatsService {
     return cat;
   }
 
-  async update(id: number, updateCatDto: UpdateCatDto) {
-    const cat = await this.catRepository.findOneBy({ id });
-
-    if (!cat) {
-      throw new BadRequestException('Cat not found');
-    }
-
-    let breed;
-    if (updateCatDto.breed) {
-      breed = await this.breedRepository.findOneBy({
-        name: updateCatDto.breed,
-      });
-
-      if (!breed) {
-        throw new BadRequestException('Breed not found');
-      }
-    }
-
-    return await this.catRepository.save({
-      ...cat,
+  async update(
+    id: number,
+    updateCatDto: UpdateCatDto,
+    user: UserActiveInterface,
+  ) {
+    await this.catRepository.findOneBy({ id });
+    return await this.catRepository.update(id, {
       ...updateCatDto,
-      breed,
+      breed: updateCatDto.breed
+        ? await this.validateBreed(updateCatDto.breed)
+        : undefined,
+      userEmail: user.email,
     });
   }
 
   async remove(id: number) {
-    return await this.catRepository.softDelete(id); // se le pasa el id
-    // return await this.catRepository.softRemove(id); // sel e pasa la instancia
+    return await this.catRepository.softDelete(id);
   }
 
   private validateOwnerShip(cat: Cat, user: UserActiveInterface) {

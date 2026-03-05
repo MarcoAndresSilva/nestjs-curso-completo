@@ -47,7 +47,7 @@ export class CatsController {
     @Body() updateCatDto: UpdateCatDto,
     @ActiveUser() user: userActivateInterface.UserActiveInterface,
   ) {
-    return this.catsService.update(+id, updateCatDto);
+    return this.catsService.update(+id, updateCatDto, user);
   }
 
   @Delete(':id')
