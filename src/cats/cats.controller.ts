@@ -55,6 +55,6 @@ export class CatsController {
     @Param('id') id: number,
     @ActiveUser() user: userActivateInterface.UserActiveInterface,
   ) {
-    return this.catsService.remove(+id);
+    return this.catsService.remove(+id, user);
   }
 }

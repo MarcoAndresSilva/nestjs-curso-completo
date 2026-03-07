@@ -11,6 +11,7 @@ import { Cat } from './entities/cat.entity';
 import { Breed } from '../breeds/entities/breed.entity';
 import { UserActiveInterface } from '../common/interfaces/user-activate.interface';
 import { Role } from '../common/enums/rol.enums';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class CatsService {
@@ -55,7 +56,7 @@ export class CatsService {
     updateCatDto: UpdateCatDto,
     user: UserActiveInterface,
   ) {
-    await this.catRepository.findOneBy({ id });
+    await this.findOne(id, user);
     return await this.catRepository.update(id, {
       ...updateCatDto,
       breed: updateCatDto.breed
@@ -65,7 +66,8 @@ export class CatsService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: number, user: UserActiveInterface) {
+    await this.findOne(id, user);
     return await this.catRepository.softDelete(id);
   }
 
