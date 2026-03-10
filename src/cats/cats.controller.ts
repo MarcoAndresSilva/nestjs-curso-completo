@@ -15,7 +15,7 @@ import { Role } from 'src/common/enums/rol.enums';
 import { ActiveUser } from 'src/common/decorators/active-user.decorator';
 import * as userActivateInterface from '../common/interfaces/user-activate.interface';
 
-@Auth(Role.USER) // con esto todo lo que sea Cats va a necesitar el rol de USER, osea que este autorizado para interferir en estas rutas, si quiero que solo algunas rutas lo necesiten, lo pongo en cada una de las rutas
+@Auth(Role.USER)
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
