@@ -11,7 +11,6 @@ import { Cat } from './entities/cat.entity';
 import { Breed } from '../breeds/entities/breed.entity';
 import { UserActiveInterface } from '../common/interfaces/user-activate.interface';
 import { Role } from '../common/enums/rol.enums';
-import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class CatsService {
